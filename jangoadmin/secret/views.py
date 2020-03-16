@@ -8,6 +8,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 from secret.models import user_details, user_details_2
+from .forms import ContactForm
 
 # Create your views here.
 @login_required
@@ -95,14 +96,20 @@ def Logout(request):
     return redirect('/secret/login/')
 
 def Add(request):
-    u = User.objects.create(username = 'Goyal#1211', first_name = 'Vibha', 
-    last_name = 'Goyal', email = 'dontknow_vibha@gmail.com')
-    user_details.objects.create(phone_number = 814622, role = 'user', user_id = u.id)
-    
-    user_obj = user_details.objects.values('id','user__first_name','user__last_name',
-    'user__username','role','phone_number','user__email','user')
 
-    return render(request, 'secret/users.html', {'user_obj': user_obj})
+    if request.method == 'POST':
+        print("request hitted")
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            
+            # form.save()
+            return redirect('/secret/users/')
+    else:
+        form = ContactForm()
+        return render(request, 'secret/forms.html', {'form': form})
+
+
+    # return render(request, 'secret/forms.html', {'user_obj': user_obj})
 
 def deletepc(request, user_id):
     User.objects.filter(id=user_obj.id).delete()
@@ -112,10 +119,10 @@ def deletepc(request, user_id):
     'user__username','role','phone_number','user__email','user', 'user__id')
 
     return render(request, 'secret/users.html', {'user_obj': user_obj})
-    # def delete_new(request, id):
-    #  post = get_object_or_404(Members, pk=id)
-    #  post.delete()
-    #  return redirect(init)
 
 def Add_2(request):
     user_details_2.objects.create(gender = 'M', city = 'Dubai')
+
+
+# def contact(request):
+    

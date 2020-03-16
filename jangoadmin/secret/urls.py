@@ -12,7 +12,6 @@ urlpatterns = [
 	path('users/add/', Add),
 	path('users/add2/', Add_2),
 	path('users/delete/<int:user.user__id>/', deletepc),
-	# url('^delete/(?P\d+)/', deletepc, name='deletepc'),
 	path('sample-listing/', SampleListing),
 	path('sample-reports/', SampleReports),
 	path('settings/', Settings),
