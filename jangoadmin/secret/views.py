@@ -3,6 +3,11 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.contrib import auth
 from django.http import HttpResponse
+from django.conf import settings
+# from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
+from django.db import models
+from secret.models import user_details, user_details_2
 
 # Create your views here.
 @login_required
@@ -68,16 +73,49 @@ def ChangePassword(request):
 
 @login_required
 def SampleListing(request):
-    return render(request, 'secret/tables.html');
+    return render(request, 'secret/tables.html')
+
+@login_required
+def Users(request):
+    user_obj = user_details.objects.values('id','user__first_name','user__last_name',
+    'user__username','role','phone_number','user__email','user')
+
+    return render(request, 'secret/users.html', {'user_obj': user_obj})
 
 @login_required
 def SampleReports(request):
-    return render(request, 'secret/charts.html');
-    
+    return render(request, 'secret/charts.html')
+
 def NotFound(request):
-    return render(request, 'secret/404.html');
+    return render(request, 'secret/404.html')
 
 @login_required
 def Logout(request):
     auth.logout(request)
     return redirect('/secret/login/')
+
+def Add(request):
+    u = User.objects.create(username = 'Goyal#1211', first_name = 'Vibha', 
+    last_name = 'Goyal', email = 'dontknow_vibha@gmail.com')
+    user_details.objects.create(phone_number = 814622, role = 'user', user_id = u.id)
+    
+    user_obj = user_details.objects.values('id','user__first_name','user__last_name',
+    'user__username','role','phone_number','user__email','user')
+
+    return render(request, 'secret/users.html', {'user_obj': user_obj})
+
+def deletepc(request, user_id):
+    User.objects.filter(id=user_obj.id).delete()
+    user_details.objects.filter(user_id = user_obj.id).delete()
+    
+    user_obj = user_details.objects.values('id','user__first_name','user__last_name',
+    'user__username','role','phone_number','user__email','user', 'user__id')
+
+    return render(request, 'secret/users.html', {'user_obj': user_obj})
+    # def delete_new(request, id):
+    #  post = get_object_or_404(Members, pk=id)
+    #  post.delete()
+    #  return redirect(init)
+
+def Add_2(request):
+    user_details_2.objects.create(gender = 'M', city = 'Dubai')
