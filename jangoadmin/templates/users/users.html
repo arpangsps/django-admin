@@ -5,9 +5,9 @@
           <!-- Breadcrumbs-->
           <ol class="breadcrumb">
             <li class="breadcrumb-item">
-              <a href="#">Dashboard</a>
+              <a href="../">Dashboard</a>
             </li>
-            <li class="breadcrumb-item active">Tables</li>
+            <li class="breadcrumb-item active">Users</li>
           </ol>
 
           <!-- DataTables Example -->
@@ -17,12 +17,14 @@
               Data Table
             </div>
             <div class="card-body">
-                <form class="form-inline ">
-                    <input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Search"
-                      aria-label="Search">
+                <form class="form-inline mb-3">
+                    <input class="form-control form-control-sm mr-3 w-75" type="text" 
+                    placeholder="Search" aria-label="Search">
                     <i class="fas fa-search" aria-hidden="true"></i>
+                    <button class="btn btn-primary ml-auto">
+                        <a href="/secret/users/addUsers" class="text-white">Add</a>
+                    </button>
                 </form>
-                <a href="/secret/users/add">Add</a>
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
@@ -50,7 +52,7 @@
                             <td>{{ user.phone_number }}</td>
                             <td>{{ user.role }}</td>
                             <td>
-                                <a href="/secret/users/add/"><span class="glyphicon glyphicon-pencil" >Edit</span></a>
+                                <a href="/secret/users/addUsers/"><span class="glyphicon glyphicon-pencil" >Edit</span></a>
                                 <a href="/secret/users/delete/{{ user.user__id }}">Delete</a>
                             </td>
                         </tr>

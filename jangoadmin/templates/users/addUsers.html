@@ -1,0 +1,99 @@
+{% extends 'secret/layout.html' %}
+<!-- {% load static %} -->
+{% block content %}
+
+<script src ="{% static 'js/forms.js' %}"></script>
+
+    <div class="container-fluid">
+
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="../../">Dashboard</a>
+          </li>
+          <li class="breadcrumb-item">
+            <a href="../"> Users </a>
+          </li>
+          <li class="breadcrumb-item active">Add</li>
+        </ol>
+
+        <!-- Card -->
+        <div class="card mb-3">
+            <div class="card-header">
+            <i class="fas fa-table"></i>
+            Registration Form
+            </div>
+
+            <form action="/secret/users/add/" method="post" 
+            id="contact_form" style="padding: 3vw">
+                {% csrf_token %}  
+        
+            <fieldset>
+
+            <!-- Text input-->
+            <div class="row mb-3">
+                <div class="col">
+                    <label class="col-md-4 control-label">First Name</label>  
+                    <input  name="first_name" placeholder="First Name" 
+                    class="form-control"  type="text" value="{{ user.user__first_name }}">
+                </div>
+            
+                <div class="col">
+                    <label class="col-md-4 control-label" >Last Name</label> 
+                    <input name="last_name" placeholder="Last Name" 
+                    class="form-control" type="text" value="{{ user.user__last_name }}">
+                </div>
+            </div>
+
+
+            <!-- Text input-->
+            <div class="row mb-3">
+                <div class="col">
+                    <label class="col-md-4 control-label">Username</label>  
+                    <input  name="user_name" placeholder="Username" class="form-control"  
+                    type="text" value="{{ user.user__username }}">
+                </div>
+        
+                <div class="col">
+                    <label class="col-md-4 control-label" >Email</label> 
+                    <input name="user_email" placeholder="Email" class="form-control" 
+                    type="email" value="{{ user.user__email }}">
+                </div>
+            </div>
+        
+
+            <!-- Text input-->
+            <div class="row mb-5">
+                <div class="col">
+                    <label class="col-md-4 control-label">Contact No.</label>  
+                    <input name="contact_no" placeholder="Phone Number" 
+                    class="form-control" type="text" value="{{ user.phone_number }}"> 
+                </div>
+        
+                <div class="col">
+                    <label class="col-md-4 control-label"> Role </label>
+                    <select name="role" class="form-control selectpicker">
+                        <option value="">Select your role</option>
+                        <option>Admin</option>
+                        <option>User</option>
+                    </select>
+                </div>
+            </div>
+                
+        
+            <!-- Button -->
+            <div class="row justify-content-center pl-5 ml-5">
+                <div class="col-12 pl-5 ml-5">
+                    <label class="col-md-4 control-label"></label>
+                    <button type="submit" class="btn btn-warning" >
+                        SUBMIT 
+                    </button>
+                </div>
+            </div>
+        
+            </fieldset>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

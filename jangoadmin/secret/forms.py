@@ -7,3 +7,7 @@ class ContactForm(forms.Form):
     email = forms.EmailField(label = 'E-Mail')
     phone_number = forms.IntegerField()
     role = forms.CharField(max_length = 10)
+
+
+
+    

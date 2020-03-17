@@ -4,7 +4,6 @@ from django.shortcuts import redirect
 from django.contrib import auth
 from django.http import HttpResponse
 from django.conf import settings
-# from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.db import models
 from secret.models import user_details, user_details_2
@@ -28,17 +27,18 @@ def Login(request):
         else:
             msg = "Incorrect Password!"
     print(msg)
-    return render(request, 'secret/login.html',{"msg":msg});
+    return render(request, 'secret/login.html',{"msg":msg})
 
 def Register(request):
-    return render(request, 'secret/register.html');
+    return render(request, 'secret/register.html')
 
 def ForgotPassword(request):
-    return render(request, 'secret/forgot-password.html');
+    return render(request, 'secret/forgot-password.html')
 
 @login_required
 def Settings(request):
-    return render(request, 'secret/settings.html',{"msg":request.GET.get('q'),"err":request.GET.get('e')});
+    return render(request, 'secret/settings.html',
+    {"msg":request.GET.get('q'),"err":request.GET.get('e')})
 
 @login_required
 def Profile(request):
@@ -81,7 +81,7 @@ def Users(request):
     user_obj = user_details.objects.values('id','user__first_name','user__last_name',
     'user__username','role','phone_number','user__email','user')
 
-    return render(request, 'secret/users.html', {'user_obj': user_obj})
+    return render(request, 'users/users.html', {'user_obj': user_obj})
 
 @login_required
 def SampleReports(request):
@@ -101,15 +101,13 @@ def Add(request):
         print("request hitted")
         form = ContactForm(request.POST)
         if form.is_valid():
-            
-            # form.save()
-            return redirect('/secret/users/')
+            return redirect('/users/')
     else:
         form = ContactForm()
-        return render(request, 'secret/forms.html', {'form': form})
+        return render(request, 'users/addUsers.html', {'form': form})
 
+    print(user_detailsSerializer())
 
-    # return render(request, 'secret/forms.html', {'user_obj': user_obj})
 
 def deletepc(request, user_id):
     User.objects.filter(id=user_obj.id).delete()
@@ -120,9 +118,5 @@ def deletepc(request, user_id):
 
     return render(request, 'secret/users.html', {'user_obj': user_obj})
 
-def Add_2(request):
-    user_details_2.objects.create(gender = 'M', city = 'Dubai')
 
-
-# def contact(request):
     
