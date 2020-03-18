@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
-from secret.views import Dashboard, Login, Register, ForgotPassword, Users, SampleReports, SampleListing, Logout, Settings, ChangePassword, Profile, Add, deletepc
+from secret.views import Dashboard, Login, Register, ForgotPassword, Users, SampleReports, SampleListing, Logout, Settings, ChangePassword, Profile, Add, deletepc, Submit
 
 urlpatterns = [
     path('', Dashboard),
@@ -10,7 +10,8 @@ urlpatterns = [
 	path('forgot-password/', ForgotPassword),
 	path('users/', Users),
 	path('users/addUsers/', Add),
-	path('users/delete/<int:user.user__id>/', deletepc),
+	path('users/addUsers/submit/', Submit),
+	path('users/delete/<int:id>/', deletepc),
 	path('sample-listing/', SampleListing),
 	path('sample-reports/', SampleReports),
 	path('settings/', Settings),

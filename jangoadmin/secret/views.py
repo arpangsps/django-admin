@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from secret.models import user_details, user_details_2
 from .forms import ContactForm
+from secret.serializers import userSerializer
 
 # Create your views here.
 @login_required
@@ -96,7 +97,7 @@ def Logout(request):
     return redirect('/secret/login/')
 
 def Add(request):
-
+    
     if request.method == 'POST':
         print("request hitted")
         form = ContactForm(request.POST)
@@ -109,14 +110,26 @@ def Add(request):
     print(user_detailsSerializer())
 
 
-def deletepc(request, user_id):
-    User.objects.filter(id=user_obj.id).delete()
-    user_details.objects.filter(user_id = user_obj.id).delete()
-    
+def deletepc(request, id):
     user_obj = user_details.objects.values('id','user__first_name','user__last_name',
-    'user__username','role','phone_number','user__email','user', 'user__id')
+    'user__username','role','phone_number','user__email','user')
 
-    return render(request, 'secret/users.html', {'user_obj': user_obj})
+    print("Hello mofo")
+    User.objects.filter(id = id).delete()
+    user_details.objects.filter(user_id = id).delete()
+    return redirect('/secret/users')
+    # return render(request, 'users/users.html', {'user_obj': user_obj})
 
+def Submit(request):
+   
+    serializer = userSerializer(data=request.POST)
 
+    # print(repr(serializer))
+    serializer.is_valid()
+    serializer.errors
+    #     print('Valid')
+    # else:
+    #     print('Invalid')
+    serializer.save()
+    return redirect('/secret/users')
     
