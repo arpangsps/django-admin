@@ -10,10 +10,10 @@ from secret.models import user_details, user_details_2
 from .forms import ContactForm
 from secret.serializers import userSerializer
 
-# Create your views here.
+
 @login_required
 def Dashboard(request):
-    return render(request, 'secret/index.html',{"user":request.user});
+    return render(request, 'secret/index.html',{"user":request.user})
 
 def Login(request):
     msg = ""
@@ -77,12 +77,14 @@ def ChangePassword(request):
 def SampleListing(request):
     return render(request, 'secret/tables.html')
 
+
+#Users
 @login_required
 def Users(request):
-    user_obj = user_details.objects.values('id','user__first_name','user__last_name',
-    'user__username','role','phone_number','user__email','user')
+    user_obj = User.objects.values('id', 'first_name', 'last_name', 'username', 'email')
+    details_obj = user_details.objects.values('id', 'phone_number', 'role', 'user_id')
+    return render(request, 'users/users.html', {'user_obj': user_obj, 'details_obj':details_obj })
 
-    return render(request, 'users/users.html', {'user_obj': user_obj})
 
 @login_required
 def SampleReports(request):
@@ -96,40 +98,37 @@ def Logout(request):
     auth.logout(request)
     return redirect('/secret/login/')
 
-def Add(request):
-    
-    if request.method == 'POST':
-        print("request hitted")
-        form = ContactForm(request.POST)
-        if form.is_valid():
-            return redirect('/users/')
-    else:
-        form = ContactForm()
-        return render(request, 'users/addUsers.html', {'form': form})
 
+# Add user
+def Add(request):
+    form = ContactForm()
+    return render(request, 'users/addUsers.html', {'form': form})
     print(user_detailsSerializer())
 
 
+#Delete user
 def deletepc(request, id):
-    user_obj = user_details.objects.values('id','user__first_name','user__last_name',
-    'user__username','role','phone_number','user__email','user')
-
-    print("Hello mofo")
+    user_obj = User.objects.values('id', 'first_name', 'last_name', 'username', 'email')
     User.objects.filter(id = id).delete()
-    user_details.objects.filter(user_id = id).delete()
     return redirect('/secret/users')
-    # return render(request, 'users/users.html', {'user_obj': user_obj})
 
+
+#Edit user 
+def Edit(request, id):
+    print('Hello mofo')
+
+
+#Submit form
 def Submit(request):
-   
     serializer = userSerializer(data=request.POST)
-
-    # print(repr(serializer))
-    serializer.is_valid()
-    serializer.errors
-    #     print('Valid')
-    # else:
-    #     print('Invalid')
-    serializer.save()
+    user_obj = User.objects.values('id', 'first_name', 'last_name', 'username', 'email')
+    obj = instance.save() 
+    print(obj.id) 
+    # details_obj = user_details.objects.values('id', 'user_id', 'phone_number', 'role')
+    # print(request.POST.get('id'))
+    # print(request.POST.get('role'))
+    print(serializer.is_valid())
+    print(serializer.errors)
+    serializer.save() 
     return redirect('/secret/users')
     

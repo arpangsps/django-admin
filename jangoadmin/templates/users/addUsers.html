@@ -30,50 +30,50 @@
         
             <fieldset>
 
-            <!-- Text input-->
+            <!-- First name and Last name-->
             <div class="row mb-3">
                 <div class="col">
                     <label class="col-md-4 control-label">First Name</label>  
                     <input  name="first_name" placeholder="First Name" 
-                    class="form-control"  type="text" value="{{ user.user__first_name }}">
+                    class="form-control"  type="text" value="{{ user.first_name }}">
                 </div>
             
                 <div class="col">
                     <label class="col-md-4 control-label" >Last Name</label> 
                     <input name="last_name" placeholder="Last Name" 
-                    class="form-control" type="text" value="{{ user.user__last_name }}">
+                    class="form-control" type="text" value="{{ user.last_name }}">
                 </div>
             </div>
 
 
-            <!-- Text input-->
+            <!-- Username and email -->
             <div class="row mb-3">
                 <div class="col">
                     <label class="col-md-4 control-label">Username</label>  
-                    <input  name="user_name" placeholder="Username" class="form-control"  
-                    type="text" value="{{ user.user__username }}">
+                    <input  name="username" placeholder="Username" class="form-control"  
+                    type="text" value="">
                 </div>
         
                 <div class="col">
                     <label class="col-md-4 control-label" >Email</label> 
-                    <input name="user_email" placeholder="Email" class="form-control" 
-                    type="email" value="{{ user.user__email }}">
+                    <input name="email" placeholder="Email" class="form-control" 
+                    type="email" value="">
                 </div>
             </div>
         
 
-            <!-- Text input-->
+            <!-- Phone number and role -->
             <div class="row mb-5">
                 <div class="col">
                     <label class="col-md-4 control-label">Contact No.</label>  
                     <input name="contact_no" placeholder="Phone Number" 
-                    class="form-control" type="text" value="{{ user.phone_number }}"> 
+                    class="form-control" type="text" value="{{ user_details.phone_number }}"> 
                 </div>
         
                 <div class="col">
                     <label class="col-md-4 control-label"> Role </label>
                     <select name="role" class="form-control selectpicker">
-                        <option value="">Select your role</option>
+                        <option value="{{ user_details.role }}">Select your role</option>
                         <option>Admin</option>
                         <option>User</option>
                     </select>
@@ -81,7 +81,7 @@
             </div>
                 
         
-            <!-- Button -->
+            <!-- Submit Button -->
             <div class="row justify-content-center pl-5 ml-5">
                 <div class="col-12 pl-5 ml-5">
                     <label class="col-md-4 control-label"></label>
